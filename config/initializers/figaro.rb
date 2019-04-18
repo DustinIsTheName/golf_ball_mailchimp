@@ -1,0 +1,1 @@
+# Figaro.require_keys("MAILCHIMP_KEY", "MAILCHIMP_DC", "CAMPAIGN_ID")
