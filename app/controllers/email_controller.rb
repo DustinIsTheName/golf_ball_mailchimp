@@ -14,7 +14,11 @@ class EmailController < ApplicationController
 
     order.save
 
-    Mailchimp.delay(run_at: 50.days.from_now).replenishment_email(order)
+    theme = ShopifyAPI::Theme.where({'role': "main"}).first
+    asset = ShopifyAPI::Asset.find('config/settings_data.json', :params => {:theme_id => theme.id})
+    settings = JSON.parse asset.value
+
+    Mailchimp.delay(run_at: settings["current"]["follow_up_email_delay"].to_i.days.from_now).replenishment_email(order)
 
     head :ok
   end

@@ -8,13 +8,17 @@ class FollowUpMailer < ApplicationMailer
     @order = order
     @order_line_items = []
     @line_item_images = []
+    @line_item_handles = []
 
     for line_item in @order.line_items
 
       p = ShopifyAPI::Product.find line_item["product_id"]
 
+      puts Colorize.green(p.product_type)
+
       if p.product_type == "Golf Balls"
         @order_line_items << line_item
+        @line_item_handles << p.handle
 
         if line_item["variant_id"]
           @line_item_images << p.images.select{|i| i.variant_ids.include? line_item["variant_id"]}.first.src
