@@ -13,8 +13,6 @@ class FollowUpMailer < ApplicationMailer
 
       p = ShopifyAPI::Product.find line_item["product_id"]
 
-      puts Colorize.green p.product_type
-
       if p.product_type == "Golf Balls"
         @order_line_items << line_item
 
@@ -28,7 +26,12 @@ class FollowUpMailer < ApplicationMailer
 
     if @order_line_items.length > 0
       mail(to: order.email, from: 'golfballnut@no-reply.com', subject: 'Time to restock? You\'re one click away.')
+      puts Colorize.green "Sent Email"
+    else
+      puts Colorize.cyan "Don't send"
     end
+
+    order.destroy
 
   end
 
