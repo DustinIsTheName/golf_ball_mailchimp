@@ -19,6 +19,23 @@ class EmailController < ApplicationController
     head :ok
   end
 
+  def save_order_test_delay
+    puts params
+
+    order = Order.new
+
+    order.email = params["email"]
+    order.name = params["customer"]["first_name"]
+    order.number = params["number"]
+    order.line_items = params["line_items"]
+
+    order.save
+
+    Mailchimp.delay(run_at: 5.minutes.from_now).replenishment_email(order)
+
+    head :ok
+  end
+
   def save_order_test
     puts params
 

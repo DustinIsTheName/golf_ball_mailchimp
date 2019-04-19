@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   post 'save-order' => 'email#save_order'
   post 'save-order-test' => 'email#save_order_test'
+  post 'save-order-test-delay' => 'email#save_order_test_delay'
 
 end
